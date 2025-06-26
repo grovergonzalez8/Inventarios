@@ -1,0 +1,154 @@
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+th {
+  background-color: #F5812D;
+  color: white;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+button {
+  padding: 6px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.navbar {
+  background-color: #F5812D;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar .logo img {
+  height: 40px;
+  width: 40px;
+}
+
+.navbar .logo span {
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a.active,
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.navbar a.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero {
+  background-image: url('https://undraw.co/api/illustrations/89c6c6ec-b5e9-4127-91a0-04e8e472dcf4'); /* imagen ilustrativa */
+  background-size: cover;
+  background-position: center;
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #ffcb95;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.botones-inicio {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 24px;
+  background-color: #F5812D;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #d86d16;
+}
+
+.btn.disabled {
+  background-color: #ccc;
+  pointer-events: none;
+}
+
+button:disabled {
+  background-color: #d9534f; 
+  color: white;
+  cursor: not-allowed;
+  border: none;
+  opacity: 0.9;
+}
+

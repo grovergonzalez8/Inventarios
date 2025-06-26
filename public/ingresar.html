@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ingresar Producto</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo Inventario">
+      <span>Inventario Posgrado</span>
+    </div>
+    <ul>
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="ingresar.html">Ingresar</a></li>
+      <li><a href="retirar.html">Retirar</a></li>
+      <li><a href="#" class="disabled">Reportes</a></li>
+    </ul>
+  </nav>
+
+  <h2>Ingresar Producto</h2>
+  <form id="form-ingresar">
+    <label>Código: <input type="text" id="Codigo" required></label><br>
+    <label>Producto: <input type="text" id="Producto" required></label><br>
+    <label>Stock: <input type="number" id="Stock" required></label><br>
+    <label>Unidad Medida: <input type="text" id="Unidad Medida" required></label><br>
+    <button type="submit">Guardar</button>
+  </form>
+
+  <script type="module" src="ingresar.js"></script>
+</body>
+</html>

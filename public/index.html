@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inicio | Inventario Posgrado</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo Inventario">
+      <span>Inventario Posgrado</span>
+    </div>
+    <ul>
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="ingresar.html">Ingresar</a></li>
+      <li><a href="retirar.html">Retirar</a></li>
+      <li><a href="#" class="disabled">Reportes</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-content">
+      <h1 id="bienvenida">Bienvenido</h1>
+      <p>Controla el inventario de forma rápida, clara y eficiente.</p>
+      <div class="botones-inicio">
+        <a href="ingresar.html" class="btn">Ingresar Productos</a>
+        <a href="retirar.html" class="btn">Retirar Productos</a>
+        <a href="#" class="btn disabled">Ver Reportes</a>
+      </div>
+    </div>
+  </header>
+
+  <script>
+    // Animación simple del título
+    const bienvenida = document.getElementById("bienvenida");
+    const texto = "Bienvenido al Sistema de Inventario";
+    let i = 0;
+
+    function escribir() {
+      if (i < texto.length) {
+        bienvenida.textContent += texto.charAt(i);
+        i++;
+        setTimeout(escribir, 60);
+      }
+    }
+
+    bienvenida.textContent = "";
+    escribir();
+  </script>
+
+</body>
+</html>

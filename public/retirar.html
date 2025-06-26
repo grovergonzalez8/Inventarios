@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Retirar Producto</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo Inventario">
+      <span>Inventario Posgrado</span>
+    </div>
+    <ul>
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="ingresar.html">Ingresar</a></li>
+      <li><a href="retirar.html">Retirar</a></li>
+      <li><a href="#" class="disabled">Reportes</a></li>
+    </ul>
+  </nav>
+
+  <h1>Inventario Posgrado - Retiro de Productos</h1>
+
+  <table id="tabla-inventario">
+    <thead>
+      <tr>
+        <th>Nro.</th>
+        <th>Código</th>
+        <th>Producto</th>
+        <th>Stock</th>
+        <th>Unidad Medida</th>
+        <th>Cantidad a pedir</th>
+        <th>Nombre Solicitante</th>
+        <th>Departamento Destino</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script src="retirar.js"></script>
+
+</body>
+
+</html>
