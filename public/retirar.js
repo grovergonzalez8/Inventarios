@@ -24,17 +24,18 @@ async function cargarInventario() {
     const tr = document.createElement("tr");
     const stockActual = producto.Stock ?? 0;
     const botonDeshabilitado = stockActual <= 0 ? "disabled" : "";
+    const textoBoton = botonDeshabilitado ? "Sin stock" : "Solicitar";
 
     tr.innerHTML = `
-      <td>${i++}</td>
-      <td>${producto.Codigo || '-'}</td>
-      <td>${producto.Producto || '-'}</td>
-      <td>${stockActual}</td>
-      <td>${producto["Unidad Medida"] || '-'}</td>
+      <td><b>${i++}</b></td>
+      <td><b>${producto.Codigo || '-'}</b></td>
+      <td><b>${producto.Producto || '-'}</b></td>
+      <td><b>${stockActual}</b></td>
+      <td><b>${producto["Unidad Medida"] || '-'}</b></td>
       <td><input type="number" min="1" max="${stockActual}" value="1" class="cantidad-pedir" ${botonDeshabilitado}/></td>
       <td><input type="text" class="nombre-solicitante" /></td>
       <td><input type="text" class="departamento-destino" /></td>
-      <td><button class="btn-solicitar" ${botonDeshabilitado}>Solicitar</button></td>
+      <td><button class="btn-solicitar" ${botonDeshabilitado ? "disabled" : ""}>${textoBoton}</button></td>
     `;
 
     tabla.appendChild(tr);

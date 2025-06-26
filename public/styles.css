@@ -1,33 +1,4 @@
-body {
-  font-family: sans-serif;
-  padding: 20px;
-}
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-th, td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-th {
-  background-color: #F5812D;
-  color: white;
-}
-
-input {
-  width: 100%;
-  padding: 5px;
-  box-sizing: border-box;
-}
-button {
-  padding: 6px 12px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
+/* Reset básico y fuente */
 * {
   margin: 0;
   padding: 0;
@@ -36,33 +7,76 @@ button {
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f0f2f5;
+  background-color: #F5F0CD;
   color: #333;
+  padding: 20px;
 }
 
+/* Tabla */
+table {
+  background-color: #fffef4;
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+th, td {
+  border: 2px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #3674B5;
+  color: white;
+}
+
+/* Inputs y formularios */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  border: 2px solid #578FCA;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3674B5;
+  box-shadow: 0 0 0 2px rgba(86, 138, 202, 0.3);
+}
+
+/* Formularios */
+form {
+  background-color: #fffef4;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Navbar */
 .navbar {
-  background-color: #F5812D;
+  background-color: #3674B5;
   padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.navbar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.navbar .logo img {
-  height: 40px;
-  width: 40px;
-}
-
-.navbar .logo span {
-  color: white;
-  font-weight: bold;
-  font-size: 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 30px;
 }
 
 .navbar ul {
@@ -77,8 +91,8 @@ body {
   font-weight: bold;
 }
 
-.navbar a.active,
-.navbar a:hover {
+.navbar a:hover,
+.navbar a.active {
   text-decoration: underline;
 }
 
@@ -87,8 +101,27 @@ body {
   pointer-events: none;
 }
 
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar .logo img {
+  height: 32px;
+  width: 32px;
+}
+
+.navbar .logo span {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); 
+}
+
+/* Hero / Página principal */
 .hero {
-  background-image: url('https://undraw.co/api/illustrations/89c6c6ec-b5e9-4127-91a0-04e8e472dcf4'); /* imagen ilustrativa */
+  background-image: url('https://undraw.co/api/illustrations/89c6c6ec-b5e9-4127-91a0-04e8e472dcf4');
   background-size: cover;
   background-position: center;
   padding: 100px 20px;
@@ -110,7 +143,7 @@ body {
 .hero h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
-  color: #ffcb95;
+  color: #FADA7A;
 }
 
 .hero p {
@@ -118,6 +151,7 @@ body {
   margin-bottom: 30px;
 }
 
+/* Botones inicio */
 .botones-inicio {
   display: flex;
   flex-wrap: wrap;
@@ -127,7 +161,7 @@ body {
 
 .btn {
   padding: 12px 24px;
-  background-color: #F5812D;
+  background-color: #578FCA;
   color: white;
   text-decoration: none;
   border-radius: 8px;
@@ -136,19 +170,27 @@ body {
 }
 
 .btn:hover {
-  background-color: #d86d16;
+  background-color: #3674B5;
 }
 
-.btn.disabled {
-  background-color: #ccc;
-  pointer-events: none;
-}
-
-button:disabled {
-  background-color: #d9534f; 
+/* Botón de acción principal (Solicitar) */
+.btn-solicitar {
+  background-color: #3674B5;
   color: white;
-  cursor: not-allowed;
   border: none;
-  opacity: 0.9;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
 }
 
+.btn-solicitar:hover:not(:disabled) {
+  background-color: #2f65a1;
+}
+
+.btn-solicitar:disabled {
+  background-color: #e74c3c;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
