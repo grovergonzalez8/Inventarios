@@ -1,3 +1,9 @@
+// Verificar sesión antes de continuar
+const user = JSON.parse(localStorage.getItem("user"));
+if (!user) {
+  window.location.href = "login.html";
+}
+
 import { FirebaseAdapter } from "../firebase/FirebaseAdapter.js";
 import { InventarioService } from "../../../src/application/InventarioService.js";
 

@@ -194,3 +194,66 @@ form {
   opacity: 0.7;
   cursor: not-allowed;
 }
+
+/* Título de login */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #3674B5;
+  font-size: 2rem;
+}
+
+/* Formulario de login */
+#login-form {
+  background-color: #fffef4;
+  padding: 30px 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ddd;
+}
+
+/* Etiquetas */
+#login-form label {
+  display: block;
+  margin-bottom: 12px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Inputs login */
+#login-form input[type="text"],
+#login-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #578FCA;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+#login-form input:focus {
+  outline: none;
+  border-color: #3674B5;
+  box-shadow: 0 0 0 2px rgba(86, 138, 202, 0.3);
+}
+
+/* Botón login */
+#login-form button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #3674B5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+#login-form button[type="submit"]:hover {
+  background-color: #2f65a1;
+}
