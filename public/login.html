@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login | Inventario Posgrado</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <h2>Login</h2>
+  
+  <nav class="navbar">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo Inventario">
+      <span>Inventario Posgrado</span>
+    </div>
+    <ul>
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="ingresar.html">Ingresar</a></li>
+      <li><a href="retirar.html">Retirar</a></li>
+      <li><a href="#" class="disabled">Reportes</a></li>
+      <li><a href="login.html">Log In</a></li>
+    </ul>
+  </nav>
+
+  <form id="login-form">
+    <label>Usuario:
+      <input type="text" id="username" required />
+    </label><br />
+    <label>Contraseña:
+      <input type="password" id="password" required />
+    </label><br />
+    <button type="submit">Ingresar</button>
+  </form>
+
+  <script type="module" src="./src/adapters/ui/login.js"></script>
+
+</body>
+</html>
