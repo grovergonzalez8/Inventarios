@@ -121,9 +121,10 @@ form {
 
 /* Hero / Página principal */
 .hero {
-  background-image: url('https://undraw.co/api/illustrations/89c6c6ec-b5e9-4127-91a0-04e8e472dcf4');
+  background-image: url('/public/assets/FondoPrincipal.jpeg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   padding: 100px 20px;
   text-align: center;
   color: white;
@@ -131,10 +132,22 @@ form {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(36, 36, 36, 0.55); /* Más oscuro para mejor contraste */
+  z-index: 1;
 }
 
 .hero-content {
-  background-color: rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 2;
+  background-color: rgba(165, 165, 165, 0.675);
   padding: 40px;
   border-radius: 12px;
   max-width: 600px;
