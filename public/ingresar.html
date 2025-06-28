@@ -5,7 +5,8 @@
   <title>Ingresar Producto</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="body-con-fondo">
+  <div class="background-overlay"></div>
 
   <nav class="navbar">
     <div class="logo">
@@ -13,25 +14,40 @@
       <span>Inventario Posgrado</span>
     </div>
     <ul>
-      <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="ingresar.html">Ingresar</a></li>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="ingresar.html" class="active">Ingresar</a></li>
       <li><a href="retirar.html">Retirar</a></li>
       <li><a href="#" class="disabled">Reportes</a></li>
       <li><a href="login.html">Log In</a></li>
     </ul>
   </nav>
 
-  <h2>Ingresar Producto</h2>
-  <form id="form-ingresar">
-    <label>Código: <input type="text" id="codigo" required></label><br>
-    <label>Producto: <input type="text" id="producto" required></label><br>
-    <label>Stock: <input type="number" id="stock" required></label><br>
-    <label>Unidad Medida: <input type="text" id="unidadMedida" required></label><br>
-    <button type="submit">Guardar</button>
-  </form>
+  <section class="form-section">
+    <h2 class="titulo-seccion">Ingresar Producto</h2>
+    <form id="form-ingresar" class="formulario-producto">
+      <div class="campo-formulario">
+        <label for="codigo">Código</label>
+        <input type="text" id="codigo" required>
+      </div>
+      <div class="campo-formulario">
+        <label for="producto">Producto</label>
+        <input type="text" id="producto" required>
+      </div>
+      <div class="campo-formulario">
+        <label for="stock">Stock</label>
+        <input type="number" id="stock" required>
+      </div>
+      <div class="campo-formulario">
+        <label for="unidadMedida">Unidad Medida</label>
+        <input type="text" id="unidadMedida" required>
+      </div>
+      <button type="submit" class="btn-principal">Guardar Producto</button>
+    </form>
+  </section>
 
   <script type="module" src="./src/adapters/ui/ingresar.js"></script>
   <script type="module" src="./src/adapters/ui/auth-navbar.js"></script>
 
 </body>
+
 </html>

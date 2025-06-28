@@ -270,3 +270,148 @@ h2 {
 #login-form button[type="submit"]:hover {
   background-color: #2f65a1;
 }
+
+/* Estilo para sección de formulario */
+.form-section {
+  background-color: #fffef4;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  max-width: 550px;
+  margin: 40px auto;
+  border: 1px solid #ddd;
+}
+
+/* Título de sección */
+.titulo-seccion {
+  text-align: center;
+  color: #3674B5;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+}
+
+/* Campos del formulario */
+.campo-formulario {
+  margin-bottom: 20px;
+}
+
+.campo-formulario label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #444;
+}
+
+.campo-formulario input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #578FCA;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+.campo-formulario input:focus {
+  outline: none;
+  border-color: #3674B5;
+  box-shadow: 0 0 0 2px rgba(86, 138, 202, 0.3);
+}
+
+/* Botón principal */
+.btn-principal {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  background-color: #3674B5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-principal:hover {
+  background-color: #2f65a1;
+}
+
+/* Estilos responsive solo para móviles */
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .navbar ul li {
+    width: 100%;
+  }
+
+  .navbar ul li a {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .hero {
+    padding: 60px 15px;
+    min-height: auto;
+    text-align: center;
+  }
+
+  .hero-content {
+    padding: 25px;
+    width: 100%;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .botones-inicio {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  form,
+  #login-form,
+  .form-section {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 90%;
+  }
+
+  .btn-principal,
+  .btn,
+  #login-form button[type="submit"] {
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  .campo-formulario input {
+    font-size: 1rem;
+  }
+}
