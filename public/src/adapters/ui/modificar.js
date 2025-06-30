@@ -1,3 +1,4 @@
+// Revisa si el usuario tiene rol de administrador
 const user = JSON.parse(localStorage.getItem("user"));
 if (!user || user.rol !== "admin") {
   alert("Acceso restringido solo para administradores");
@@ -11,9 +12,47 @@ const firebaseAdapter = new FirebaseAdapter();
 const inventarioService = new InventarioService(firebaseAdapter);
 
 const tablaBody = document.querySelector("#tabla-productos tbody");
+const filtroBusqueda = document.getElementById("filtro-busqueda");
+const filtroOrden = document.getElementById("orden-alfabetico");
+const filtroStock = document.getElementById("filtro-stock");
 
-async function cargarProductos() {
-  const productos = await inventarioService.obtenerProductos();
+let productosGlobal = [];
+
+filtroBusqueda.addEventListener("input", aplicarFiltros);
+filtroOrden.addEventListener("change", aplicarFiltros);
+filtroStock.addEventListener("change", aplicarFiltros);
+
+function aplicarFiltros() {
+  const busqueda = filtroBusqueda.value.toLowerCase();
+  const orden = filtroOrden.value;
+  const stock = filtroStock.value;
+
+  let filtrados = productosGlobal.filter(p => {
+    const nombre = (p.Producto || "").toLowerCase();
+    const codigo = (p.Codigo || "").toLowerCase();
+    const coincideBusqueda = nombre.includes(busqueda) || codigo.includes(busqueda);
+
+    const tieneStock = (p.Stock ?? 0) > 0;
+    const pasaFiltroStock =
+      stock === "todos" ||
+      (stock === "con-stock" && tieneStock) ||
+      (stock === "sin-stock" && !tieneStock);
+
+    return coincideBusqueda && pasaFiltroStock;
+  });
+
+  filtrados.sort((a, b) => {
+    const nombreA = (a.Producto || "").toLowerCase();
+    const nombreB = (b.Producto || "").toLowerCase();
+    if (orden === "az") return nombreA.localeCompare(nombreB);
+    if (orden === "za") return nombreB.localeCompare(nombreA);
+    return 0;
+  });
+
+  renderTabla(filtrados);
+}
+
+function renderTabla(productos) {
   tablaBody.innerHTML = '';
   let index = 1;
 
@@ -66,6 +105,11 @@ async function cargarProductos() {
 
     tablaBody.appendChild(row);
   });
+}
+
+async function cargarProductos() {
+  productosGlobal = await inventarioService.obtenerProductos();
+  aplicarFiltros();
 }
 
 cargarProductos();

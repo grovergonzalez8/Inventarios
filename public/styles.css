@@ -345,18 +345,18 @@ h2 {
 }
 
 /* Estilos modificar*/
-
-.editable-cell {
+#tabla-productos td.acciones-btns {
   background-color: #fffef4;
-  border: 2px solid #578FCA;
-  padding: 5px;
+  text-align: center; 
 }
 
-.acciones-btns {
+#tabla-productos td.acciones-btns .contenedor-botones {
   display: flex;
-  gap: 10px;
+  gap: px;
   justify-content: center;
+  align-items: center;
 }
+
 
 .btn-editar,
 .btn-eliminar,
