@@ -9,10 +9,49 @@ import { InventarioService } from "../../../src/application/InventarioService.js
 const firebaseAdapter = new FirebaseAdapter();
 const inventarioService = new InventarioService(firebaseAdapter);
 
+let productosGlobal = [];
+
 async function cargarInventario() {
+  productosGlobal = await inventarioService.obtenerProductos();
+  aplicarFiltros();
+}
+
+function aplicarFiltros() {
+  const orden = document.getElementById("orden-alfabetico").value;
+  const filtroStock = document.getElementById("filtro-stock").value;
+  const textoBusqueda = document.getElementById("filtro-busqueda").value.trim().toLowerCase();
+
+  let productosFiltrados = [...productosGlobal];
+
+  if (filtroStock === "con-stock") {
+    productosFiltrados = productosFiltrados.filter(p => (p.Stock ?? 0) > 0);
+  } else if (filtroStock === "sin-stock") {
+    productosFiltrados = productosFiltrados.filter(p => (p.Stock ?? 0) <= 0);
+  }
+
+  if (textoBusqueda !== "") {
+    productosFiltrados = productosFiltrados.filter(p => {
+      const nombre = (p.Producto || "").toLowerCase();
+      const codigo = (p.Codigo || "").toLowerCase();
+      return nombre.includes(textoBusqueda) || codigo.includes(textoBusqueda);
+    });
+  }
+
+  productosFiltrados.sort((a, b) => {
+    const nombreA = (a.Producto || "").toLowerCase();
+    const nombreB = (b.Producto || "").toLowerCase();
+
+    if (orden === "az") return nombreA.localeCompare(nombreB);
+    if (orden === "za") return nombreB.localeCompare(nombreA);
+    return 0;
+  });
+
+  renderTabla(productosFiltrados);
+}
+
+function renderTabla(productos) {
   const tabla = document.querySelector("#tabla-inventario tbody");
   tabla.innerHTML = "";
-  const productos = await inventarioService.obtenerProductos();
   let i = 1;
 
   productos.forEach(producto => {
@@ -29,7 +68,21 @@ async function cargarInventario() {
       <td>${producto["Unidad Medida"] || '-'}</td>
       <td><input type="number" min="1" max="${stockActual}" value="1" class="cantidad-pedir" ${botonDeshabilitado} /></td>
       <td><input type="text" class="nombre-solicitante" /></td>
-      <td><input type="text" class="departamento-destino" /></td>
+      <td>
+        <select class="departamento-destino">
+          <option value="">Seleccione</option>
+          <option>Direccion de Posgrado</option>
+          <option>Secretaria Administrativa</option>
+          <option>Secretaria Academica</option>
+          <option>Desarrollo Tecnologico y Sistemas para la Educacion</option>
+          <option>Coordinacion Academica</option>
+          <option>Informatica</option>
+          <option>Coordinacion Area Diplomados Doble Titulacion</option>
+          <option>Soporte Academico y Caja Chica</option>
+          <option>Recepcion e Informaciones</option>
+          <option>Apoyo Logistico</option>
+        </select>
+      </td>
       <td><button class="btn-solicitar" ${botonDeshabilitado}>${textoBoton}</button></td>
     `;
 
@@ -62,5 +115,11 @@ async function cargarInventario() {
     }
   });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("orden-alfabetico").addEventListener("change", aplicarFiltros);
+  document.getElementById("filtro-stock").addEventListener("change", aplicarFiltros);
+  document.getElementById("filtro-busqueda").addEventListener("input", aplicarFiltros);
+});
 
 cargarInventario();

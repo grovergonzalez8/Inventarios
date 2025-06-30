@@ -26,6 +26,22 @@
 
   <h1>Inventario Posgrado - Retiro de Productos</h1>
 
+  <div id="filtros" class="filtros-container">
+    <input type="text" id="filtro-busqueda" placeholder="Buscar producto o código..." />
+
+    <select id="orden-alfabetico">
+      <option value="az">Orden A-Z</option>
+      <option value="za">Orden Z-A</option>
+    </select>
+
+    <select id="filtro-stock">
+      <option value="todos">Todos</option>
+      <option value="con-stock">Con stock</option>
+      <option value="sin-stock">Sin stock</option>
+    </select>
+  </div>
+
+
   <table id="tabla-inventario">
     <thead>
       <tr>
