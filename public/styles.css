@@ -129,7 +129,7 @@ form {
 
 /* Hero / Página principal */
 .hero {
-  background-image: url('/public/assets/FondoPrincipal.jpeg');
+  background-color: #0099ff;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -148,7 +148,7 @@ form {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background-color: rgba(36, 36, 36, 0.55); /* Más oscuro para mejor contraste */
+  background-color: rgba(109, 109, 109, 0.55); 
   z-index: 1;
 }
 
