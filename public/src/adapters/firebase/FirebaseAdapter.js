@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, collection, getDocs, addDoc, query, where, updateDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, addDoc, query, where, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA0pXFrvZpa6Mb9fgZb9PIPwIw7jPNRU6Q",
@@ -44,6 +44,21 @@ class FirebaseAdapter {
 
   async crearSolicitud(solicitud) {
     return await addDoc(collection(this.db, "solicitudes"), solicitud);
+  }
+
+  async actualizarProductoPorId(id, data) {
+    const docRef = doc(this.db, "productos", id);
+    await updateDoc(docRef, data);
+  }
+
+  async eliminarProductoPorId(id) {
+    const docRef = doc(this.db, "productos", id);
+    await deleteDoc(docRef);
+  }
+
+  async obtenerProductosConId() {
+    const snapshot = await getDocs(collection(this.db, "productos"));
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
 }
 

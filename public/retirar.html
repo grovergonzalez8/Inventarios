@@ -19,6 +19,7 @@
       <li><a href="ingresar.html">Ingresar</a></li>
       <li><a href="retirar.html">Retirar</a></li>
       <li><a href="#" class="disabled">Reportes</a></li>
+      <li><a href="modificar.html">Inventario</a></li>
       <li><a href="login.html">Log In</a></li>
     </ul>
   </nav>
@@ -45,6 +46,18 @@
 
   <script type="module" src="./src/adapters/ui/retirar.js"></script>
   <script type="module" src="./src/adapters/ui/auth-navbar.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const currentPath = window.location.pathname.split("/").pop();
+      const navLinks = document.querySelectorAll(".navbar a");
+
+      navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentPath) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
 
 </body>
 

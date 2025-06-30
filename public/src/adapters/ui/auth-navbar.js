@@ -9,6 +9,7 @@ if (user) {
     ${isAdmin ? '<li><a href="ingresar.html">Ingresar</a></li>' : ''}
     <li><a href="retirar.html">Retirar</a></li>
     <li><a href="#" class="disabled">Reportes</a></li>
+    ${isAdmin ? '<li><a href="modificar.html">Inventario</a></li>' : ''}
     <li><a href="#" id="logout">Cerrar sesión</a></li>
   `;
 
@@ -19,7 +20,11 @@ if (user) {
 
 } else {
   const path = window.location.pathname;
-  if (path.includes("ingresar.html") || path.includes("retirar.html")) {
+  if (
+    path.includes("ingresar.html") ||
+    path.includes("retirar.html") ||
+    path.includes("modificar.html")
+  ) {
     window.location.href = "login.html";
   }
 }

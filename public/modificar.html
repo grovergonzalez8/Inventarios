@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Modificar Inventario</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo Inventario">
+            <span>Inventario Posgrado</span>
+        </div>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="ingresar.html">Ingresar</a></li>
+            <li><a href="retirar.html">Retirar</a></li>
+            <li><a href="modificar.html" class="active">Inventario</a></li>
+            <li><a href="login.html">Log In</a></li>
+        </ul>
+    </nav>
+
+    <h1>Modificar Inventario</h1>
+
+    <div class="tabla-responsive">
+        <div class="table-container">
+            <table id="tabla-productos">
+                <thead>
+                    <tr>
+                        <th>Nro.</th>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Stock</th>
+                        <th>Unidad Medida</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="./src/adapters/ui/modificar.js"></script>
+    <script type="module" src="./src/adapters/ui/auth-navbar.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname.split("/").pop();
+            const navLinks = document.querySelectorAll(".navbar a");
+
+            navLinks.forEach(link => {
+                if (link.getAttribute("href") === currentPath) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

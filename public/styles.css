@@ -89,11 +89,19 @@ form {
   color: white;
   text-decoration: none;
   font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
 }
 
-.navbar a:hover,
-.navbar a.active {
+.navbar a:hover{
   text-decoration: underline;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.navbar a.active {
+  background-color: #24558d;
+  text-decoration: none;
+
 }
 
 .navbar a.disabled {
@@ -336,6 +344,56 @@ h2 {
   background-color: #2f65a1;
 }
 
+/* Estilos modificar*/
+
+.editable-cell {
+  background-color: #fffef4;
+  border: 2px solid #578FCA;
+  padding: 5px;
+}
+
+.acciones-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-editar,
+.btn-eliminar,
+.btn-guardar {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.btn-editar {
+  background-color: #578FCA;
+}
+
+.btn-editar:hover {
+  background-color: #3674B5;
+}
+
+.btn-guardar {
+  background-color: #2ecc71;
+}
+
+.btn-guardar:hover {
+  background-color: #27ae60;
+}
+
+.btn-eliminar {
+  background-color: #e74c3c;
+}
+
+.btn-eliminar:hover {
+  background-color: #c0392b;
+}
+
 /* Estilos responsive solo para móviles */
 @media (max-width: 480px) {
   body {
@@ -413,5 +471,31 @@ h2 {
 
   .campo-formulario input {
     font-size: 1rem;
+  }
+
+  .editable-cell {
+    font-size: 0.85rem;
+    padding: 4px;
+  }
+
+  .acciones-btns {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .btn-editar,
+  .btn-guardar,
+  .btn-eliminar {
+    font-size: 0.85rem;
+    width: 100%;
+    padding: 8px;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px; /* permite scroll horizontal */
   }
 }

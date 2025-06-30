@@ -30,4 +30,16 @@ export class InventarioService {
 
     await this.productoRepository.crearSolicitud(solicitud);
   }
+
+  async actualizarProducto(id, data) {
+    return this.productoRepository.actualizarProductoPorId(id, data);
+  }
+
+  async eliminarProducto(id) {
+    return this.productoRepository.eliminarProductoPorId(id);
+  }
+
+  async obtenerProductos() {
+    return this.productoRepository.obtenerProductosConId(); 
+  }
 }
