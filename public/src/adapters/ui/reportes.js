@@ -50,7 +50,7 @@ cargarSolicitudes();
 
 document.getElementById("btnExcel").addEventListener("click", exportarExcel);
 document.getElementById("btnPDF").addEventListener("click", exportarPDF);
-document.getElementById("btnPrint").addEventListener("click", () => window.print());
+document.getElementById("btnPrint").addEventListener("click", imprimirVista);
 
 function exportarExcel() {
   import("https://cdn.sheetjs.com/xlsx-latest/package/xlsx.mjs").then(XLSX => {
@@ -128,9 +128,8 @@ function exportarPDF() {
           index + 1,
           celdas[1]?.textContent.trim() || "",
           celdas[2]?.textContent.trim() || "",
-          celdas[3]?.textContent.trim() || "",
-          celdas[7]?.textContent.trim() || "",
           celdas[6]?.textContent.trim() || "",
+          celdas[5]?.textContent.trim() || "",
         ]);
       });
 
@@ -160,7 +159,7 @@ function exportarPDF() {
 
       // FOOTER
       doc.setDrawColor(0);
-      doc.line(40, 780, pageWidth - 40, 780); // Línea separadora
+      doc.line(40, 780, pageWidth - 40, 780);
       doc.setFontSize(10);
       doc.setTextColor(100);
       doc.text("Sistema de Almacenes", pageWidth / 2, 795, { align: "center" });
@@ -168,4 +167,46 @@ function exportarPDF() {
       doc.save("nota_salida.pdf");
     });
   });
+}
+
+function imprimirVista() {
+  const primerFila = document.querySelector("#tabla-solicitudes tbody tr");
+  if (!primerFila) return alert("No hay datos para imprimir.");
+
+  const celdas = primerFila.querySelectorAll("td");
+
+  // Extraer datos
+  const solicitante = celdas[4]?.textContent.trim() || "—";
+  const departamento = celdas[3]?.textContent.trim() || "—";
+  const fechaSolicitud = celdas[7]?.textContent.trim() || "—";
+  const fechaImpresion = new Date().toLocaleString("es-BO");
+
+  // Insertar encabezado
+  document.getElementById("print-solicitante").textContent = solicitante;
+  document.getElementById("print-departamento").textContent = departamento;
+  document.getElementById("print-fecha-solicitud").textContent = fechaSolicitud;
+  document.getElementById("print-fecha-impresion").textContent = fechaImpresion;
+
+  // Llenar tabla
+  const printBody = document.getElementById("print-tabla-body");
+  printBody.innerHTML = "";
+
+  const filas = document.querySelectorAll("#tabla-solicitudes tbody tr");
+  filas.forEach((tr, index) => {
+    const td = tr.querySelectorAll("td");
+
+    const filaHTML = `
+      <tr>
+        <td style="padding: 5px;">${index + 1}</td>
+        <td style="padding: 5px;">${td[1]?.textContent.trim() || ""}</td>
+        <td style="padding: 5px;">${td[2]?.textContent.trim() || ""}</td>
+        <td style="padding: 5px;">${td[6]?.textContent.trim() || ""}</td>
+        <td style="padding: 5px;">${td[5]?.textContent.trim() || ""}</td>
+      </tr>
+    `;
+
+    printBody.insertAdjacentHTML("beforeend", filaHTML);
+  });
+
+  window.print();
 }

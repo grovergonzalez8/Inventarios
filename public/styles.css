@@ -573,52 +573,22 @@ h2 {
 }
 
 @media print {
-  nav, .btn-export, h1 {
-    display: none !important;
+  body * {
+    visibility: hidden !important;
   }
 
-  body {
-    font-family: 'Times New Roman', serif;
-    color: black;
-    margin: 20mm;
+  #print-area,
+  #print-area * {
+    visibility: visible !important;
   }
 
-  #tabla-solicitudes {
+  #print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
-    border-collapse: collapse;
-  }
-
-  #tabla-solicitudes th, #tabla-solicitudes td {
-    border: 1px solid black;
-    padding: 6px;
-    font-size: 12pt;
-  }
-
-  /* Header impreso */
-  .print-header {
-    margin-bottom: 20px;
-  }
-
-  .print-header .izq {
-    float: left;
-    text-align: left;
-  }
-
-  .print-header .centro {
-    text-align: center;
-  }
-
-  .print-header .der {
-    float: right;
-    text-align: right;
-  }
-
-  .print-footer {
-    margin-top: 40px;
-    text-align: center;
-  }
-
-  .page-break {
-    page-break-after: always;
+    background: white;
+    padding: 0;
+    margin: 0;
   }
 }

@@ -53,6 +53,63 @@
         </div>
     </div>
 
+    <!-- FORMATO DE IMPRESIÓN -->
+    <div id="print-area" style="display: none;">
+        <div style="padding: 40px; font-family: Helvetica, sans-serif; font-size: 10pt;">
+            <!-- HEADER -->
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <strong>Universidad Mayor de San Simón</strong><br>
+                    Unidad Sub Almacén Posgrado Derecho
+                </div>
+                <div style="text-align: right;">
+                    Fecha: <span id="print-fecha-impresion"></span><br>
+                    Página 1
+                </div>
+            </div>
+
+            <h2 style="text-align: center; margin-top: 20px;">Nota de Salida</h2>
+
+            <!-- ENCABEZADO -->
+            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                <div>
+                    <div>Solicitante: <span id="print-solicitante"></span></div>
+                    <div>Departamento destino: <span id="print-departamento"></span></div>
+                </div>
+                <div style="text-align: right;">
+                    Fecha de solicitud: <span id="print-fecha-solicitud"></span>
+                </div>
+            </div>
+
+            <!-- TABLA -->
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;" border="1">
+                <thead style="background-color: #588FCA; color: white;">
+                    <tr>
+                        <th style="padding: 5px;">Nro.</th>
+                        <th style="padding: 5px;">Código del Producto</th>
+                        <th style="padding: 5px;">Producto</th>
+                        <th style="padding: 5px;">Unidad Medida</th>
+                        <th style="padding: 5px;">Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody id="print-tabla-body"></tbody>
+            </table>
+
+            <!-- FIRMA -->
+            <div style="text-align: center; margin-top: 100px;">
+                <div style="border-top: 1px solid #000; width: 200px; margin: 0 auto;"></div>
+                <div>Recibí Conforme</div>
+                <div>SOLICITANTE</div>
+            </div>
+
+            <!-- FOOTER -->
+            <div style="margin-top: 40px; border-top: 1px solid #000; text-align: center; padding-top: 5px;">
+                Sistema de Almacenes
+            </div>
+        </div>
+    </div>
+
+
     <script type="module" src="./src/adapters/ui/reportes.js"></script>
     <script type="module" src="./src/adapters/ui/auth-navbar.js"></script>
     <script>
