@@ -1,4 +1,3 @@
-// Revisa si el usuario tiene rol de administrador
 const user = JSON.parse(localStorage.getItem("user"));
 if (!user || user.rol !== "admin") {
   alert("Acceso restringido solo para administradores");

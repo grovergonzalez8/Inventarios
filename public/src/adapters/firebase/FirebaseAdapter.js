@@ -60,6 +60,11 @@ class FirebaseAdapter {
     const snapshot = await getDocs(collection(this.db, "productos"));
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   }
+
+  async obtenerSolicitudesConId() {
+    const snapshot = await getDocs(collection(this.db, "solicitudes"));
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  }
 }
 
 export { FirebaseAdapter };

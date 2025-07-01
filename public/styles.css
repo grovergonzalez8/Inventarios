@@ -421,6 +421,41 @@ h2 {
   font-size: 1rem;
 }
 
+/* REPORTES */
+.btn-export {
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnExcel {
+  background-color: #27ae60;
+}
+
+#btnExcel:hover {
+  background-color: #219150;
+}
+
+#btnPDF {
+  background-color: #e74c3c;
+}
+
+#btnPDF:hover {
+  background-color: #c0392b;
+}
+
+#btnPrint {
+  background-color: #2980b9;
+}
+
+#btnPrint:hover {
+  background-color: #1f5f8b;
+}
+
 /* Estilos responsive solo para móviles */
 @media (max-width: 480px) {
   body {
