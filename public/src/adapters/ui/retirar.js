@@ -104,7 +104,17 @@ function renderTabla(productos) {
         }
 
         try {
-          await inventarioService.retirarProducto(producto, cantidad, nombreSolicitante, departamentoDestino);
+          const datosSolicitud = {
+            codigo_producto: producto.Codigo || "",
+            producto: producto.Producto || "",
+            cantidad: cantidad,
+            unidad_medida: producto["Unidad Medida"] || "",
+            nombre_solicitante: nombreSolicitante,
+            departamento_destino: departamentoDestino,
+            fecha: new Date().toISOString()
+          };
+
+          await inventarioService.retirarProducto(datosSolicitud);
           alert("¡Solicitud enviada con éxito!");
           cargarInventario();
         } catch (error) {

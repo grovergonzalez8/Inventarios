@@ -43,7 +43,15 @@ class FirebaseAdapter {
   }
 
   async crearSolicitud(solicitud) {
-    return await addDoc(collection(this.db, "solicitudes"), solicitud);
+    return await addDoc(collection(this.db, "solicitudes"), {
+      codigo_producto: solicitud.codigo_producto,
+      producto: solicitud.producto,
+      cantidad: solicitud.cantidad,
+      unidad_medida: solicitud.unidad_medida || "UNIDAD",
+      nombre_solicitante: solicitud.nombre_solicitante,
+      departamento_destino: solicitud.departamento_destino,
+      fecha: new Date().toISOString(),
+    });
   }
 
   async actualizarProductoPorId(id, data) {
@@ -64,6 +72,28 @@ class FirebaseAdapter {
   async obtenerSolicitudesConId() {
     const snapshot = await getDocs(collection(this.db, "solicitudes"));
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  }
+
+  async obtenerProductoPorCodigo(codigo) {
+    const productosRef = collection(this.db, "productos");
+    const consulta = query(productosRef, where("Codigo", "==", codigo));
+    const snapshot = await getDocs(consulta);
+
+    if (!snapshot.empty) {
+      return snapshot.docs[0].data();
+    }
+    return null;
+  }
+
+  async obtenerSolicitudesPorFecha(inicio, fin) {
+    const solicitudesRef = collection(this.db, "solicitudes");
+    const consulta = query(
+      solicitudesRef,
+      where("fecha", ">=", inicio),
+      where("fecha", "<=", fin)
+    );
+    const snapshot = await getDocs(consulta);
+    return snapshot.docs.map(doc => doc.data());
   }
 }
 

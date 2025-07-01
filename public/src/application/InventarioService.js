@@ -11,24 +11,34 @@ export class InventarioService {
     return this.productoRepository.obtenerProductos();
   }
 
-  async retirarProducto(producto, cantidad, nombreSolicitante, departamentoDestino) {
-    if (producto.Stock < cantidad) {
+  async retirarProducto(datosSolicitud) {
+    // Obtener el producto completo para verificar el stock
+    const producto = await this.productoRepository.obtenerProductoPorCodigo(datosSolicitud.codigo_producto);
+    
+    if (!producto) {
+      throw new Error("Producto no encontrado");
+    }
+
+    if (producto.Stock < datosSolicitud.cantidad) {
       throw new Error("Stock insuficiente");
     }
 
-    const nuevoStock = producto.Stock - cantidad;
-
+    // Actualizar el stock
+    const nuevoStock = producto.Stock - datosSolicitud.cantidad;
     await this.productoRepository.actualizarStock(producto.Codigo, nuevoStock);
 
-    const solicitud = {
+    const solicitudCompleta = {
       codigo_producto: producto.Codigo,
-      cantidad,
-      nombre_solicitante: nombreSolicitante,
-      departamento_destino: departamentoDestino,
-      fecha: new Date().toISOString(),
+      producto: producto.Producto, // Nombre completo del producto
+      descripcion: producto.Descripcion || producto.Producto, // Usar descripción si existe
+      cantidad: datosSolicitud.cantidad,
+      unidad_medida: producto["Unidad Medida"] || "UNIDAD", // Campo de tu base de datos
+      nombre_solicitante: datosSolicitud.nombre_solicitante,
+      departamento_destino: datosSolicitud.departamento_destino,
+      fecha: new Date().toISOString()
     };
 
-    await this.productoRepository.crearSolicitud(solicitud);
+    await this.productoRepository.crearSolicitud(solicitudCompleta);
   }
 
   async actualizarProducto(id, data) {
@@ -41,5 +51,10 @@ export class InventarioService {
 
   async obtenerProductos() {
     return this.productoRepository.obtenerProductosConId(); 
+  }
+
+  async obtenerProductoPorCodigo(codigo) {
+    const productos = await this.productoRepository.obtenerProductos();
+    return productos.find(p => p.Codigo === codigo);
   }
 }
