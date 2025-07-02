@@ -174,39 +174,132 @@ function imprimirVista() {
   if (!primerFila) return alert("No hay datos para imprimir.");
 
   const celdas = primerFila.querySelectorAll("td");
-
-  // Extraer datos
   const solicitante = celdas[4]?.textContent.trim() || "—";
   const departamento = celdas[3]?.textContent.trim() || "—";
   const fechaSolicitud = celdas[7]?.textContent.trim() || "—";
   const fechaImpresion = new Date().toLocaleString("es-BO");
 
-  // Insertar encabezado
-  document.getElementById("print-solicitante").textContent = solicitante;
-  document.getElementById("print-departamento").textContent = departamento;
-  document.getElementById("print-fecha-solicitud").textContent = fechaSolicitud;
-  document.getElementById("print-fecha-impresion").textContent = fechaImpresion;
-
-  // Llenar tabla
-  const printBody = document.getElementById("print-tabla-body");
-  printBody.innerHTML = "";
-
   const filas = document.querySelectorAll("#tabla-solicitudes tbody tr");
+  let tablaHtml = "";
+
   filas.forEach((tr, index) => {
     const td = tr.querySelectorAll("td");
-
-    const filaHTML = `
+    tablaHtml += `
       <tr>
-        <td style="padding: 5px;">${index + 1}</td>
-        <td style="padding: 5px;">${td[1]?.textContent.trim() || ""}</td>
-        <td style="padding: 5px;">${td[2]?.textContent.trim() || ""}</td>
-        <td style="padding: 5px;">${td[6]?.textContent.trim() || ""}</td>
-        <td style="padding: 5px;">${td[5]?.textContent.trim() || ""}</td>
+        <td>${index + 1}</td>
+        <td>${td[1]?.textContent.trim()}</td>
+        <td>${td[2]?.textContent.trim()}</td>
+        <td>${td[6]?.textContent.trim()}</td>
+        <td>${td[5]?.textContent.trim()}</td>
       </tr>
     `;
-
-    printBody.insertAdjacentHTML("beforeend", filaHTML);
   });
 
-  window.print();
+  const ventana = window.open("", "_blank");
+  ventana.document.write(`
+    <html>
+    <head>
+      <title>Nota de Salida</title>
+      <style>
+        body {
+          font-family: Helvetica, sans-serif;
+          font-size: 10pt;
+          padding: 40px;
+        }
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+        }
+        th, td {
+          border: 1px solid #000;
+          padding: 5px;
+        }
+        th {
+          background-color: #588FCA;
+          color: black;
+        }
+        .header, .footer {
+          display: flex;
+          justify-content: space-between;
+        }
+        h2 {
+          text-align: center;
+          margin: 20px 0;
+        }
+        .firma {
+          text-align: center;
+          margin-top: 100px;
+        }
+        .firma div {
+          margin-top: 10px;
+        }
+        .linea-footer {
+          position: fixed;
+          bottom: 40px;
+          left: 40px;
+          rigth: 40px;
+          font-size: 10pt;
+          margin-top: 40px;
+          border-top: 1px solid black;
+          text-align: center;
+          padding-top: 5px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div>
+          <strong>Universidad Mayor de San Simón</strong><br>
+          Unidad Sub Almacén Posgrado Derecho
+        </div>
+        <div style="text-align: right;">
+          Fecha: ${fechaImpresion}<br>
+          Página 1
+        </div>
+      </div>
+
+      <h2>Nota de Salida</h2>
+
+      <div class="header">
+        <div>
+          Solicitante: ${solicitante}<br>
+          Departamento destino: ${departamento}
+        </div>
+        <div style="text-align: right;">
+          Fecha de solicitud: ${fechaSolicitud}
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nro.</th>
+            <th>Código del Producto</th>
+            <th>Producto</th>
+            <th>Unidad Medida</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tablaHtml}
+        </tbody>
+      </table>
+
+      <div class="firma">
+        <div style="border-top: 1px solid #000; width: 200px; margin: 0 auto;"></div>
+        <div>Recibí Conforme</div>
+        <div>SOLICITANTE</div>
+      </div>
+
+      <div class="linea-footer">
+        Sistema de Almacenes
+      </div>
+    </body>
+    </html>
+  `);
+
+  ventana.document.close();
+  ventana.focus();
+  ventana.print();
 }
