@@ -1,31 +1,29 @@
-const user = JSON.parse(localStorage.getItem("user"));
-const navbar = document.querySelector(".navbar ul");
+import { obtenerUsuarioSeguro } from "./auth.js";
 
-if (user) {
-  const isAdmin = user.rol === "admin";
+document.addEventListener("DOMContentLoaded", () => {
+  const user = obtenerUsuarioSeguro();
+  const navbar = document.querySelector(".navbar ul");
 
-  navbar.innerHTML = `
-    <li><a href="index.html">Inicio</a></li>
-    ${isAdmin ? '<li><a href="ingresar.html">Ingresar</a></li>' : ''}
-    <li><a href="retirar.html">Retirar</a></li>
-    <li><a href="reportes.html">Reportes</a></li>
-    ${isAdmin ? '<li><a href="modificar.html">Inventario</a></li>' : ''}
-    <li><a href="#" id="logout">Cerrar sesión</a></li>
-  `;
+  if (user) {
+    const isAdmin = user.rol === "admin";
 
-  document.getElementById("logout").addEventListener("click", () => {
-    localStorage.removeItem("user");
-    window.location.href = "login.html";
-  });
+    navbar.innerHTML = `
+      <li><a href="index.html" ${isActive('index.html')}>Inicio</a></li>
+      ${isAdmin ? `<li><a href="ingresar.html" ${isActive('ingresar.html')}>Ingresar</a></li>` : ''}
+      <li><a href="retirar.html" ${isActive('retirar.html')}>Retirar</a></li>
+      <li><a href="reportes.html" ${isActive('reportes.html')}>Reportes</a></li>
+      ${isAdmin ? `<li><a href="modificar.html" ${isActive('modificar.html')}>Inventario</a></li>` : ''}
+      <li><a href="#" id="logout">Cerrar sesión</a></li>
+    `;
 
-} else {
-  const path = window.location.pathname;
-  if (
-    path.includes("ingresar.html") ||
-    path.includes("retirar.html") ||
-    path.includes("modificar.html") ||
-    path.includes("reportes.html")
-  ) {
-    window.location.href = "login.html";
+    document.getElementById("logout").addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("user");
+      window.location.href = "login.html";
+    });
   }
+});
+
+function isActive(page) {
+  return window.location.pathname.includes(page) ? 'class="active"' : '';
 }

@@ -1,8 +1,30 @@
 import { FirebaseAdapter } from "../firebase/FirebaseAdapter.js";
 import { SolicitudesService } from "../../../src/application/SolicitudesService.js";
+import { obtenerUsuarioSeguro, redirigirAlLogin, mostrarNotificacion } from "./auth.js";
+
+const user = obtenerUsuarioSeguro();
+if (!user) {
+  mostrarNotificacion("Debes iniciar sesión para ver los reportes", true);
+  setTimeout(() => redirigirAlLogin(), 2000);
+}
 
 const firebaseAdapter = new FirebaseAdapter();
 const solicitudesService = new SolicitudesService(firebaseAdapter);
+
+const UI = {
+  tabla: document.querySelector("#tabla-solicitudes tbody"),
+  btnExcel: document.getElementById("btnExcel"),
+  btnPDF: document.getElementById("btnPDF"),
+  btnPrint: document.getElementById("btnPrint")
+};
+
+function inicializar() {
+  UI.btnExcel.addEventListener("click", exportarExcel);
+  UI.btnPDF.addEventListener("click", exportarPDF);
+  UI.btnPrint.addEventListener("click", imprimirVista);
+  
+  cargarSolicitudes();
+}
 
 const tablaBody = document.querySelector("#tabla-solicitudes tbody");
 

@@ -357,6 +357,62 @@ h2 {
   align-items: center;
 }
 
+/* Estilos para tabla de inventario */
+#tabla-inventario {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#tabla-inventario th, #tabla-inventario td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+#tabla-inventario th {
+  background-color: #f8f9fa;
+  color: black;
+  font-weight: 600;
+}
+
+#tabla-inventario tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Estilos para inputs deshabilitados */
+#tabla-inventario input:disabled, 
+#tabla-inventario select:disabled {
+  background-color: #f9f9f9;
+  cursor: not-allowed;
+}
+
+/* Estilos para botones */
+.btn-solicitar {
+  padding: 8px 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-solicitar:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.btn-solicitar:not(:disabled):hover {
+  background-color: #218838;
+}
+
+/* Estilos para inputs */
+.cantidad-pedir, .nombre-solicitante, .departamento-destino {
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+}
+
 
 .btn-editar,
 .btn-eliminar,
@@ -386,12 +442,53 @@ h2 {
   background-color: #27ae60;
 }
 
-.btn-eliminar {
+/* Estilos para formulario */
+.error {
+  border-color: #ff4444 !important;
+}
+
+.error-message {
+  display: block;
+  color: #ff4444;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* Estilos para notificaciones */
+.notificacion {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 5px;
+  color: white;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.notificacion.mostrar {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notificacion.exito {
+  background-color: #4CAF50;
+}
+
+.notificacion.error {
   background-color: #e74c3c;
 }
 
-.btn-eliminar:hover {
-  background-color: #c0392b;
+.btn-limpiar {
+  background-color: #f5f5f5;
+  color: #333;
+  margin-left: 10px;
+}
+
+.btn-limpiar:hover {
+  background-color: #e0e0e0;
 }
 /* FILTROS */
 .filtros-container {
@@ -456,6 +553,16 @@ h2 {
   background-color: #1f5f8b;
 }
 
+.btn-primario {
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  background-color: #2980b9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 /* Estilos responsive solo para móviles */
 @media (max-width: 480px) {
   body {

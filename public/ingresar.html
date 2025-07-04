@@ -1,66 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ingresar Producto</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ingreso de productos al inventario">
+  <title>Ingresar Producto | Inventario Posgrado</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" type="image/png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
-<body class="body-con-fondo">
-  <div class="background-overlay"></div>
 
-  <nav class="navbar">
-    <div class="logo">
-      <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo Inventario">
-      <span>Inventario Posgrado</span>
-    </div>
-    <ul>
-      <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="ingresar.html">Ingresar</a></li>
-      <li><a href="retirar.html">Retirar</a></li>
-      <li><a href="reportes.html">Reportes</a></li>
-      <li><a href="modificar.html">Inventario</a></li>
-      <li><a href="login.html">Log In</a></li>
-    </ul>
-  </nav>
+<body>
+  <header>
+    <nav class="navbar" aria-label="Navegación principal">
+      <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Logo Inventario" width="32" height="32">
+        <span>Inventario Posgrado</span>
+      </div>
+      <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="ingresar.html" class="active" aria-current="page">Ingresar</a></li>
+        <li><a href="retirar.html">Retirar</a></li>
+        <li><a href="reportes.html">Reportes</a></li>
+        <li><a href="modificar.html">Inventario</a></li>
+        <li><a href="login.html">Iniciar Sesión</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <section class="form-section">
-    <h2 class="titulo-seccion">Ingresar Producto</h2>
-    <form id="form-ingresar" class="formulario-producto">
-      <div class="campo-formulario">
-        <label for="codigo">Código</label>
-        <input type="text" id="codigo" required>
-      </div>
-      <div class="campo-formulario">
-        <label for="producto">Producto</label>
-        <input type="text" id="producto" required>
-      </div>
-      <div class="campo-formulario">
-        <label for="stock">Stock</label>
-        <input type="number" id="stock" required>
-      </div>
-      <div class="campo-formulario">
-        <label for="unidadMedida">Unidad Medida</label>
-        <input type="text" id="unidadMedida" required>
-      </div>
-      <button type="submit" class="btn-principal">Guardar Producto</button>
-    </form>
-  </section>
+  <main class="contenedor">
+    <section class="form-section" aria-labelledby="titulo-ingresar">
+      <h1 id="titulo-ingresar" class="titulo-seccion">Ingresar Producto</h1>
+      <form id="form-ingresar" class="formulario-producto">
+        <div class="campo-formulario">
+          <label for="codigo">Código del Producto</label>
+          <input type="text" id="codigo" name="codigo" required aria-required="true">
+          <small class="mensaje-error" id="error-codigo"></small>
+        </div>
+        
+        <div class="campo-formulario">
+          <label for="producto">Nombre del Producto</label>
+          <input type="text" id="producto" name="producto" required aria-required="true">
+          <small class="mensaje-error" id="error-producto"></small>
+        </div>
+        
+        <div class="campo-formulario">
+          <label for="stock">Cantidad en Stock</label>
+          <input type="number" id="stock" name="stock" min="0" required aria-required="true">
+          <small class="mensaje-error" id="error-stock"></small>
+        </div>
+        
+        <div class="campo-formulario">
+          <label for="unidadMedida">Unidad de Medida</label>
+          <input type="text" id="unidadMedida" name="unidadMedida" required aria-required="true">
+          <small class="mensaje-error" id="error-unidadMedida"></small>
+        </div>
+        
+        <div class="acciones-formulario">
+          <button type="submit" class="btn-primario">Guardar Producto</button>
+          <button type="reset" class="btn-secundario">Limpiar Formulario</button>
+        </div>
+      </form>
+    </section>
+  </main>
 
   <script type="module" src="./src/adapters/ui/ingresar.js"></script>
   <script type="module" src="./src/adapters/ui/auth-navbar.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const currentPath = window.location.pathname.split("/").pop();
-      const navLinks = document.querySelectorAll(".navbar a");
-
-      navLinks.forEach(link => {
-        if (link.getAttribute("href") === currentPath) {
-          link.classList.add("active");
-        }
-      });
-    });
-  </script>
-
 </body>
-
 </html>

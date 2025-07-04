@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <title>Modificar Inventario</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 
 <body>
@@ -61,18 +62,6 @@
 
     <script type="module" src="./src/adapters/ui/modificar.js"></script>
     <script type="module" src="./src/adapters/ui/auth-navbar.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const currentPath = window.location.pathname.split("/").pop();
-            const navLinks = document.querySelectorAll(".navbar a");
-
-            navLinks.forEach(link => {
-                if (link.getAttribute("href") === currentPath) {
-                    link.classList.add("active");
-                }
-            });
-        });
-    </script>
 
 </body>
 

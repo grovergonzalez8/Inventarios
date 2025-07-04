@@ -1,135 +1,197 @@
-const user = JSON.parse(localStorage.getItem("user"));
-if (!user) {
-  window.location.href = "login.html";
-}
-
 import { FirebaseAdapter } from "../firebase/FirebaseAdapter.js";
 import { InventarioService } from "../../../src/application/InventarioService.js";
+import { obtenerUsuarioSeguro, redirigirAlLogin, mostrarNotificacion } from "./auth.js";
+
+const user = obtenerUsuarioSeguro();
+if (!user) {
+  mostrarNotificacion("Debes iniciar sesión para acceder a esta vista", true);
+  redirigirAlLogin();
+}
 
 const firebaseAdapter = new FirebaseAdapter();
 const inventarioService = new InventarioService(firebaseAdapter);
 
 let productosGlobal = [];
+const DEPARTAMENTOS = [
+  "Direccion de Posgrado",
+  "Secretaria Administrativa",
+  "Secretaria Academica",
+  "Desarrollo Tecnologico y Sistemas para la Educacion",
+  "Coordinacion Academica",
+  "Informatica",
+  "Coordinacion Area Diplomados Doble Titulacion",
+  "Soporte Academico y Caja Chica",
+  "Recepcion e Informaciones",
+  "Apoyo Logistico"
+];
+
+const UI = {
+  tabla: document.querySelector("#tabla-inventario tbody"),
+  filtroOrden: document.getElementById("orden-alfabetico"),
+  filtroStock: document.getElementById("filtro-stock"),
+  filtroBusqueda: document.getElementById("filtro-busqueda")
+};
+
+document.addEventListener("DOMContentLoaded", inicializar);
+
+async function inicializar() {
+  try {
+    UI.filtroOrden.addEventListener("change", aplicarFiltros);
+    UI.filtroStock.addEventListener("change", aplicarFiltros);
+    UI.filtroBusqueda.addEventListener("input", aplicarFiltros);
+    
+    await cargarInventario();
+  } catch (error) {
+    console.error("Error al inicializar:", error);
+    mostrarNotificacion("Error al cargar el inventario", true);
+  }
+}
 
 async function cargarInventario() {
-  productosGlobal = await inventarioService.obtenerProductos();
-  aplicarFiltros();
+  try {
+    productosGlobal = await inventarioService.obtenerProductos();
+    aplicarFiltros();
+  } catch (error) {
+    console.error("Error al cargar inventario:", error);
+    throw error;
+  }
 }
 
 function aplicarFiltros() {
-  const orden = document.getElementById("orden-alfabetico").value;
-  const filtroStock = document.getElementById("filtro-stock").value;
-  const textoBusqueda = document.getElementById("filtro-busqueda").value.trim().toLowerCase();
+  try {
+    const orden = UI.filtroOrden.value;
+    const filtroStock = UI.filtroStock.value;
+    const textoBusqueda = UI.filtroBusqueda.value.trim().toLowerCase();
 
-  let productosFiltrados = [...productosGlobal];
+    let productosFiltrados = filtrarPorStock(productosGlobal, filtroStock);
+    productosFiltrados = filtrarPorBusqueda(productosFiltrados, textoBusqueda);
+    productosFiltrados = ordenarProductos(productosFiltrados, orden);
 
-  if (filtroStock === "con-stock") {
-    productosFiltrados = productosFiltrados.filter(p => (p.Stock ?? 0) > 0);
-  } else if (filtroStock === "sin-stock") {
-    productosFiltrados = productosFiltrados.filter(p => (p.Stock ?? 0) <= 0);
+    renderTabla(productosFiltrados);
+  } catch (error) {
+    console.error("Error al aplicar filtros:", error);
   }
+}
 
-  if (textoBusqueda !== "") {
-    productosFiltrados = productosFiltrados.filter(p => {
-      const nombre = (p.Producto || "").toLowerCase();
-      const codigo = (p.Codigo || "").toLowerCase();
-      return nombre.includes(textoBusqueda) || codigo.includes(textoBusqueda);
-    });
-  }
+function filtrarPorStock(productos, filtro) {
+  return productos.filter(p => {
+    const stock = p.Stock ?? 0;
+    return filtro === "todos" ||
+           (filtro === "con-stock" && stock > 0) ||
+           (filtro === "sin-stock" && stock <= 0);
+  });
+}
 
-  productosFiltrados.sort((a, b) => {
+function filtrarPorBusqueda(productos, texto) {
+  if (!texto) return productos;
+  
+  return productos.filter(p => {
+    const nombre = (p.Producto || "").toLowerCase();
+    const codigo = (p.Codigo || "").toLowerCase();
+    return nombre.includes(texto) || codigo.includes(texto);
+  });
+}
+
+function ordenarProductos(productos, orden) {
+  return [...productos].sort((a, b) => {
     const nombreA = (a.Producto || "").toLowerCase();
     const nombreB = (b.Producto || "").toLowerCase();
-
-    if (orden === "az") return nombreA.localeCompare(nombreB);
-    if (orden === "za") return nombreB.localeCompare(nombreA);
-    return 0;
+    return orden === "az" ? nombreA.localeCompare(nombreB) : 
+           orden === "za" ? nombreB.localeCompare(nombreA) : 0;
   });
-
-  renderTabla(productosFiltrados);
 }
 
 function renderTabla(productos) {
-  const tabla = document.querySelector("#tabla-inventario tbody");
-  tabla.innerHTML = "";
-  let i = 1;
-
-  productos.forEach(producto => {
-    const tr = document.createElement("tr");
+  UI.tabla.innerHTML = productos.map((producto, index) => {
     const stockActual = producto.Stock ?? 0;
-    const botonDeshabilitado = stockActual <= 0 ? "disabled" : "";
-    const textoBoton = botonDeshabilitado ? "Sin stock" : "Solicitar";
-
-    tr.innerHTML = `
-      <td>${i++}</td>
-      <td>${producto.Codigo || '-'}</td>
-      <td>${producto.Producto || '-'}</td>
-      <td>${stockActual}</td>
-      <td>${producto["Unidad Medida"] || '-'}</td>
-      <td><input type="number" min="1" max="${stockActual}" value="1" class="cantidad-pedir" ${botonDeshabilitado} /></td>
-      <td><input type="text" class="nombre-solicitante" /></td>
-      <td>
-        <select class="departamento-destino">
-          <option value="">Seleccione</option>
-          <option>Direccion de Posgrado</option>
-          <option>Secretaria Administrativa</option>
-          <option>Secretaria Academica</option>
-          <option>Desarrollo Tecnologico y Sistemas para la Educacion</option>
-          <option>Coordinacion Academica</option>
-          <option>Informatica</option>
-          <option>Coordinacion Area Diplomados Doble Titulacion</option>
-          <option>Soporte Academico y Caja Chica</option>
-          <option>Recepcion e Informaciones</option>
-          <option>Apoyo Logistico</option>
-        </select>
-      </td>
-      <td><button class="btn-solicitar" ${botonDeshabilitado}>${textoBoton}</button></td>
+    const tieneStock = stockActual > 0;
+    
+    return `
+      <tr data-id="${producto.id}">
+        <td>${index + 1}</td>
+        <td>${producto.Codigo || '-'}</td>
+        <td>${producto.Producto || '-'}</td>
+        <td>${stockActual}</td>
+        <td>${producto["Unidad Medida"] || '-'}</td>
+        <td>
+          <input type="number" 
+                 min="1" 
+                 max="${stockActual}" 
+                 value="1" 
+                 class="cantidad-pedir" 
+                 ${!tieneStock ? 'disabled' : ''}>
+        </td>
+        <td><input type="text" class="nombre-solicitante" ${!tieneStock ? 'disabled' : ''}></td>
+        <td>
+          <select class="departamento-destino" ${!tieneStock ? 'disabled' : ''}>
+            <option value="">Seleccione</option>
+            ${DEPARTAMENTOS.map(depto => `<option>${depto}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <button class="btn-solicitar" ${!tieneStock ? 'disabled' : ''}>
+            ${tieneStock ? 'Solicitar' : 'Sin stock'}
+          </button>
+        </td>
+      </tr>
     `;
+  }).join('');
 
-    tabla.appendChild(tr);
-
-    if (!botonDeshabilitado) {
-      tr.querySelector(".btn-solicitar").addEventListener("click", async () => {
-        const cantidad = parseInt(tr.querySelector(".cantidad-pedir").value);
-        const nombreSolicitante = tr.querySelector(".nombre-solicitante").value.trim();
-        const departamentoDestino = tr.querySelector(".departamento-destino").value.trim();
-
-        if (!nombreSolicitante || !departamentoDestino) {
-          alert("Por favor complete todos los campos.");
-          return;
-        }
-        if (isNaN(cantidad) || cantidad <= 0 || cantidad > stockActual) {
-          alert("Cantidad inválida.");
-          return;
-        }
-
-        try {
-          const datosSolicitud = {
-            codigo_producto: producto.Codigo || "",
-            producto: producto.Producto || "",
-            cantidad: cantidad,
-            unidad_medida: producto["Unidad Medida"] || "",
-            nombre_solicitante: nombreSolicitante,
-            departamento_destino: departamentoDestino,
-            fecha: new Date().toISOString()
-          };
-
-          await inventarioService.retirarProducto(datosSolicitud);
-          alert("¡Solicitud enviada con éxito!");
-          cargarInventario();
-        } catch (error) {
-          console.error("Error al enviar solicitud:", error);
-          alert("Error al enviar solicitud.");
-        }
-      });
-    }
-  });
+  UI.tabla.addEventListener("click", manejarClickSolicitar);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("orden-alfabetico").addEventListener("change", aplicarFiltros);
-  document.getElementById("filtro-stock").addEventListener("change", aplicarFiltros);
-  document.getElementById("filtro-busqueda").addEventListener("input", aplicarFiltros);
-});
+async function manejarClickSolicitar(event) {
+  const btn = event.target.closest(".btn-solicitar");
+  if (!btn || btn.disabled) return;
 
-cargarInventario();
+  const fila = btn.closest("tr");
+  try {
+    const solicitud = obtenerDatosSolicitud(fila);
+    validarSolicitud(solicitud);
+    
+    await inventarioService.retirarProducto(solicitud);
+    mostrarNotificacion("Solicitud enviada con éxito");
+    await cargarInventario();
+  } catch (error) {
+    console.error("Error en solicitud:", error);
+    mostrarNotificacion(`${error.message}`, true);
+  }
+}
+
+function obtenerDatosSolicitud(fila) {
+  const productoId = fila.dataset.id;
+  const producto = productosGlobal.find(p => p.id === productoId);
+  
+  return {
+    codigo_producto: producto.Codigo || "",
+    producto: producto.Producto || "",
+    cantidad: parseInt(fila.querySelector(".cantidad-pedir").value),
+    unidad_medida: producto["Unidad Medida"] || "",
+    nombre_solicitante: fila.querySelector(".nombre-solicitante").value.trim(),
+    departamento_destino: fila.querySelector(".departamento-destino").value.trim(),
+    fecha: new Date().toISOString(),
+    usuario: obtenerUsuarioSeguro()?.username || "Anónimo"
+  };
+}
+
+function validarSolicitud(solicitud) {
+  const errores = [];
+  
+  if (!solicitud.nombre_solicitante) {
+    errores.push("El nombre del solicitante es requerido");
+  }
+  
+  if (!solicitud.departamento_destino) {
+    errores.push("Debe seleccionar un departamento");
+  }
+  
+  if (isNaN(solicitud.cantidad)) {
+    errores.push("La cantidad debe ser un número válido");
+  } else if (solicitud.cantidad <= 0) {
+    errores.push("La cantidad debe ser mayor a cero");
+  }
+  
+  if (errores.length > 0) {
+    throw new Error(errores.join(". "));
+  }
+}
