@@ -563,6 +563,26 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+.btn-primario:hover {
+  background-color: #1f5f8b;
+}
+
+.btn-secundario {
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  background-color: #e74c3c;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secundario:hover {
+  background-color: #c0392b;
+}
+
 /* Estilos responsive solo para móviles */
 @media (max-width: 480px) {
   body {
